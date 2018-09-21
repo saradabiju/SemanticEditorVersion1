@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Point3D?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polygon?>
+
+<fx:root fx:id="linkpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="41.0" prefWidth="46.0" stylesheets="@app.css" type="Pane" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Line fx:id="node_link" endX="10.0" />
+      <Pane fx:id="attribute" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="46.0" scaleX="0.5" scaleY="0.5" style="-fx-background-color: red;">
+         <rotationAxis>
+            <Point3D />
+         </rotationAxis>
+         <children>
+            <HBox fx:id="relation" alignment="TOP_CENTER" layoutX="-13.0" prefHeight="40.0" prefWidth="50.0" stylesheets="@app.css">
+      
+                                                                     <styleClass>
+                  <String fx:value="icon-cyan" />
+                  <String fx:value="icon-white" />
+                  <String fx:value="icon-black" />
+                  <String fx:value="node-overlay" />
+                  <String fx:value="right-link-handle" />
+                  <String fx:value="parent" />
+               </styleClass>
+            </HBox>
+            <AnchorPane fx:id="anchorpaneright" layoutX="31.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="20.0" style="-fx-background-color: cyan;">
+               <children>
+                  <Polygon fx:id="arrowright" layoutX="6.0" layoutY="30.0" points="-50.0, 40.0, 50.0, 40.0, 0.0, -60.0" rotate="90.9" scaleX="0.1" scaleY="0.2" stroke="BLACK" strokeType="INSIDE" />
+               </children>
+               <styleClass>
+                  <String fx:value="icon-purple" />
+                  <String fx:value="icon-cyan" />
+               </styleClass>
+            </AnchorPane>
+         </children>
+         <styleClass>
+            <String fx:value="icon-cyan" />
+            <String fx:value="icon-green" />
+         </styleClass>
+      </Pane>
+   </children>
+</fx:root>
