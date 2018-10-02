@@ -6,10 +6,13 @@ import com.assemblogue.plr.contentsdata.ontology.OntologyItem;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -500,8 +503,18 @@ public class OntMenu {
                 omi.fxLabel.setWrapText(true);  // 折り返しあり
                 if (omi.child.size() > 0) {
                     omi.vbox = recprops2(omi, omi.fxLabel, stage);
-                    omi.fxLabel.setOnContextMenuRequested(event -> showRelMenu(omi, stage));
-                    omi.fxLabel.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+                  //  omi.fxLabel.setOnContextMenuRequested(event -> showRelMenu(omi, stage));
+
+                    omi.fxLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            		public void handle(MouseEvent event) {
+            	if(event.getButton().equals(MouseButton.PRIMARY)) {
+
+            		showRelMenu(omi, stage);
+            		  omi.fxLabel.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+            	}}
+            });
+
                 }
 
                 omi_list.add(omi);

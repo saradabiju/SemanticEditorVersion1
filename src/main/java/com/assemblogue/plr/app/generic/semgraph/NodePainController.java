@@ -2,7 +2,6 @@ package com.assemblogue.plr.app.generic.semgraph;
 
 
 import java.util.*;
-import java.util.List;
 
 import com.assemblogue.plr.contentsdata.ontology.OntologyItem;
 import com.assemblogue.plr.lib.EntityNode;
@@ -261,29 +260,34 @@ public class NodePainController {
     	scene.getStylesheets().add(getClass().getResource("app.css").toExternalForm());
 
     	stage.setTitle(nd_name);
+
     	stage.setScene(scene);
     	stage.showingProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue && !newValue) {
                 this.exec_cansel();
             }
         });
-
+    	//rootLayout.update_graph(true);
     	stage.show();
-    	createBackGroundData();
 
+    	Map<String,EntityNode> footprint = new LinkedHashMap<>();
+        for (EntityNode node : graphAct.getEntryNodes()) {
+            if (graphAct.isVisibleRoot(node)) {
+    	createBackGroundData(true);
+            }
 
-
+        }
     }
 
 
 
-    private void createBackGroundData() {
+    private void createBackGroundData(boolean sync_flag) {
     	 Map<String,EntityNode> footprint = new LinkedHashMap<>();
          for (EntityNode node : graphAct.getEntryNodes()) {
              if (graphAct.isVisibleRoot(node)) {
                  // ルートノードとして表示可能
-                 NodeCell ndc = createNodeBtn(footprint,null, node, true);
-                 ndc.visibleroot = true;
+            		DraggableNode dragnode = createDragNode(footprint, null, node, sync_flag, true);
+            		dragnode.visibleroot = true;
 
              }
          }
@@ -294,7 +298,13 @@ public class NodePainController {
 
 
 
-    public void createEditArea(String nd_name) {
+    private DraggableNode createDragNode(Map<String, EntityNode> footprint, Object object, EntityNode node,
+			boolean sync_flag, boolean b) {
+		
+		return null;
+	}
+
+	public void createEditArea(String nd_name) {
         stage.setTitle(nd_name);
         stage.showingProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue && !newValue) {
@@ -303,7 +313,7 @@ public class NodePainController {
         });
 
         // make node edit area
-        update_nodeTree(true);
+      //  rootLayout.update_graph(true);
 
         stage.setScene(new Scene(bpRoot, Utils.getWindowWidth(), Utils.getWindowHeight()));
     }
@@ -314,7 +324,7 @@ public class NodePainController {
     private void exec_updateNodeTree() {
         //TxtList.debug("NodePainController:exec_nodeList: sync");
         plrAct.sync(graphAct.getGraphNode());
-        update_nodeTree(true);
+        //rootLayout.update_graph(true);
     }
 
     /**
