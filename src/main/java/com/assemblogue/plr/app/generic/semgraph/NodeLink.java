@@ -1,7 +1,9 @@
 package com.assemblogue.plr.app.generic.semgraph;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.UUID;
 
 import com.assemblogue.plr.app.generic.semgraph.OntMenu.OntMenuItem;
@@ -26,8 +28,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.RotateEvent;
 import javafx.scene.layout.AnchorPane;
@@ -69,13 +73,14 @@ Pane linkpane;
 	private GraphActor graphAct;
 	private OntMenu ontmenu;
 
+
 	private final DoubleProperty mControlOffsetX = new SimpleDoubleProperty();
 	private final DoubleProperty mControlOffsetY = new SimpleDoubleProperty();
 	private final DoubleProperty mControlDirectionX1 = new SimpleDoubleProperty();
 	private final DoubleProperty mControlDirectionY1 = new SimpleDoubleProperty();
 	private final DoubleProperty mControlDirectionX2 = new SimpleDoubleProperty();
 	private final DoubleProperty mControlDirectionY2 = new SimpleDoubleProperty();
-
+	private final List  mLinkIds = new ArrayList  ();
 	// private EventHandler<MouseEvent> ArrowLeftVisible;
 	private EventHandler<MouseEvent> ArrowRightVisible;
 
@@ -158,7 +163,44 @@ Pane linkpane;
 
 		});
 
+		attribute.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
 
+				if(event.getButton().equals(MouseButton.SECONDARY)) {
+
+					System.out.println("attribute right click ");
+
+					DraggableNode dragnode = null;
+
+					Pane parent = (Pane) node_link.getParent();
+					parent.getChildren().remove(node_link);
+
+				for (ListIterator<String> iterId = mLinkIds.listIterator(); iterId.hasNext();) {
+
+					String id = iterId.next();
+
+					for (ListIterator<Node> iterNode = dragnode.getChildren().listIterator(); iterNode.hasNext();) {
+
+						Node node = iterNode.next();
+
+						if (node.getId() == null)
+							continue;
+
+						if (node.getId().equals(id))
+							iterNode.remove();
+					}
+
+
+					iterId.remove();
+				}
+				attribute.setVisible(false);
+				event.consume();
+				}
+			}
+
+		}
+				);
 		mControlDirectionX1.bind(
 				new When(node_link.startXProperty().greaterThan(node_link.endXProperty())).then(-1.0).otherwise(1.0));
 
@@ -193,8 +235,13 @@ Pane linkpane;
 
 		setRelationValue(relationValue);
 
+
+
 	}
 
+	public void registerLink(String linkId) {
+	    mLinkIds.add(linkId);
+	}
 	private void ArrowHandler() {
 
 		/*
@@ -285,6 +332,7 @@ Pane linkpane;
 
 		attribute.setVisible(true);
 	}
+
 
 	public void setStart(Point2D startPoint) {
 

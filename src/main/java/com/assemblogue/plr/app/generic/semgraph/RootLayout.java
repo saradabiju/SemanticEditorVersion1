@@ -375,7 +375,7 @@ public class RootLayout extends BorderPane {
 		System.out.println("---------------------End");
 	}
 
-	private void update_graph(boolean sync_flag) {
+	void update_graph(boolean sync_flag) {
 		System.out.println("update tree");
 		draggableNodes.clear();
 		Map<String, EntityNode> footprint = new LinkedHashMap<>();
@@ -385,7 +385,7 @@ public class RootLayout extends BorderPane {
 			x = 0;
 			DraggableNode dragnode = createDragNode(footprint, null, node, sync_flag, true);
 
-			// right_pane.getChildren().add(dragnode);
+		//	right_pane.getChildren().add(dragnode);
 		}
 
 	}
